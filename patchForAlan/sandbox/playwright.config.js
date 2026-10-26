@@ -5,6 +5,7 @@ module.exports = {
   retries: 0,
   reporter: "list",
   use: {
+    baseURL: process.env.BASE_URL || "http://host.docker.internal:5173",
     headless: true,
     screenshot: "only-on-failure",
     trace: "retain-on-failure",

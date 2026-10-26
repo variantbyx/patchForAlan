@@ -2,6 +2,21 @@ const fs = require("fs");
 const path = require("path");
 const { execFileSync } = require("child_process");
 
+if (fs.existsSync(path.join(__dirname, ".env"))) {
+  const envContent = fs.readFileSync(path.join(__dirname, ".env"), "utf8");
+  for (const line of envContent.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (trimmed && !trimmed.startsWith("#")) {
+      const idx = trimmed.indexOf("=");
+      if (idx !== -1) {
+        const key = trimmed.slice(0, idx).trim();
+        const val = trimmed.slice(idx + 1).trim();
+        process.env[key] = val;
+      }
+    }
+  }
+}
+
 // ---------- Configuration ----------
 
 const TARGET_REPO =
@@ -72,10 +87,16 @@ async function askAI(systemPrompt, userPrompt) {
 
 // Remove Markdown fences if the model includes them.
 function cleanCode(text) {
-  return text
-    .replace(/^```(?:typescript|javascript|jsx|ts|js)?\s*\n/i, "")
-    .replace(/\n```\s*$/, "")
-    .trim();
+  let cleaned = text.trim();
+  const match = cleaned.match(/```(?:typescript|javascript|jsx|tsx|ts|js)?\s*([\s\S]*?)\s*```/);
+  if (match) {
+    cleaned = match[1];
+  } else {
+    cleaned = cleaned
+      .replace(/^```(?:typescript|javascript|jsx|tsx|ts|js)?\s*\n/i, "")
+      .replace(/\n```\s*$/i, "");
+  }
+  return cleaned.trim();
 }
 
 // ---------- Docker / Playwright runner ----------

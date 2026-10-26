@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import "./App.css";
 
@@ -14,6 +13,7 @@ function App() {
     }
 
     setSubmittedFeedback(feedback.trim());
+    setFeedback("");
   }
 
   return (
