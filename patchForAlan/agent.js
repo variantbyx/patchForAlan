@@ -21,9 +21,7 @@ if (fs.existsSync(path.join(__dirname, ".env"))) {
 
 const TARGET_REPO =
   process.env.TARGET_REPO ||
-  (fs.existsSync(path.resolve(__dirname, "../patchForAlan-target"))
-    ? path.resolve(__dirname, "../patchForAlan-target")
-    : path.resolve(__dirname, "../patchguard-target"));
+  path.resolve(__dirname, "../patchForAlan-target");
 
 const SOURCE_FILE = path.join(TARGET_REPO, "src", "App.jsx");
 const SANDBOX = path.join(__dirname, "sandbox");
@@ -248,7 +246,7 @@ async function createPullRequest({
 
   const issueId = process.env.ISSUE_ID || "1";
   const branchName =
-    process.env.BRANCH_NAME || `patchguard/fix-issue-#${issueId}`;
+    process.env.BRANCH_NAME || `patchforalan/fix-issue-#${issueId}`;
   const repoOwner = process.env.GITHUB_OWNER || "variantbyx";
   const repoName = process.env.GITHUB_REPO || "patchForAlan";
   const baseBranch = process.env.BASE_BRANCH || "main";
@@ -353,7 +351,7 @@ async function createPullRequest({
       stagingDir,
       "commit",
       "-m",
-      `🛡️ PatchGuard fix for issue #${issueId}: clear feedback input after submit`,
+      `🛡️ PatchForAlan fix for issue #${issueId}: clear feedback input after submit`,
     ],
     { encoding: "utf8" }
   );
@@ -371,7 +369,7 @@ async function createPullRequest({
   // 4. Open Pull Request on GitHub using @octokit/rest
   console.log("Opening Pull Request via @octokit/rest...");
 
-  const prBody = `## 🛡️ PatchGuard Autonomous Fix Report
+  const prBody = `## 🛡️ PatchForAlan Autonomous Fix Report
 
 ### 1. Bug Reproduction
 - **Status:** Reproduced successfully
@@ -390,7 +388,7 @@ async function createPullRequest({
     const prResponse = await octokit.pulls.create({
       owner: repoOwner,
       repo: repoName,
-      title: `🛡️ PatchGuard Fix: Issue #${issueId} - Clear feedback textarea on submit`,
+      title: `🛡️ PatchForAlan Fix: Issue #${issueId} - Clear feedback textarea on submit`,
       head: branchName,
       base: baseBranch,
       body: prBody,
@@ -548,7 +546,7 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error("\nPatchGuard stopped:", error.message);
+  console.error("\nPatchForAlan stopped:", error.message);
   process.exitCode = 1;
 });
 
