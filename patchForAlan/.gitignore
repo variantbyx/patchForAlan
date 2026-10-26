@@ -1,3 +1,6 @@
-﻿node_modules/
+.env
+node_modules/
+sandbox/test-results/
 test-results/
 *.log
+.git-staging/
