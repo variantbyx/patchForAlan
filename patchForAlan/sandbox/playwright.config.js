@@ -7,7 +7,7 @@ module.exports = {
   use: {
     baseURL: process.env.BASE_URL || "http://host.docker.internal:5173",
     headless: true,
-    screenshot: "only-on-failure",
+    screenshot: "on",
     trace: "retain-on-failure",
   },
   outputDir: "test-results",
