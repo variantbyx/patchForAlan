@@ -13,7 +13,7 @@ function App() {
     }
 
     setSubmittedFeedback(feedback.trim());
-    setFeedback("");
+    setFeedback(""); // Clear the textarea after successful submission
   }
 
   return (
