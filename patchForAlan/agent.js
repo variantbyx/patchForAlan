@@ -28,13 +28,13 @@ const MAX_REPAIR_ATTEMPTS = 2;
 
 async function askAI(systemPrompt, userPrompt) {
   const apiKey = process.env.OPENAI_API_KEY;
-  const model = process.env.LLM_MODEL;
+  const model = process.env.LLM_MODEL || "gpt-4o";
   const baseURL =
     process.env.LLM_BASE_URL || "https://api.openai.com/v1";
 
-  if (!apiKey || !model) {
+  if (!apiKey) {
     throw new Error(
-      "Set OPENAI_API_KEY and LLM_MODEL in PowerShell first."
+      "Set OPENAI_API_KEY in PowerShell first."
     );
   }
 
